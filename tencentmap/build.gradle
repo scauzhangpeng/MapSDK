@@ -1,36 +1,29 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 25
     buildToolsVersion "26.0.2"
+
     defaultConfig {
-        applicationId "com.xyz.mapsdk"
+//        applicationId "com.xyz.tencentmap"
         minSdkVersion 18
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
-    signingConfigs {
-        release {
-            keyAlias APK_SIGN_KEY_ALIAS
-            keyPassword APK_SIGN_KEY_PASSWORD
-            storeFile file(APK_SIGN_KEY_FILE)
-            storePassword APK_SIGN_STORE_PASSWORD
-        }
-    }
 
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
     buildTypes {
         release {
-            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-
-        debug {
-            signingConfig signingConfigs.release
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDir 'libs'
+            jni.srcDirs = []
         }
     }
 }
@@ -41,8 +34,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
-//    compile project(':amap')
-//    compile project(':baidumap')
-    compile project(':tencentmap')
+    compile project(':maplib')
 }
