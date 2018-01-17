@@ -1,6 +1,7 @@
 package com.xyz.baidumap;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
@@ -16,31 +17,29 @@ import com.xyz.maplib.MapLocation;
 
 public class BaiduAdapter extends BaseMapAdapter {
 
+    private static final String TAG = "BaiduAdapter";
+
     private LocationClient mLocationClient;
 
     public class MyLocationListener extends BDAbstractLocationListener {
         @Override
-        public void onReceiveLocation(BDLocation location) {
+        public void onReceiveLocation(BDLocation baiduLocation) {
+            Log.d(TAG, "onReceiveLocation: " + baiduLocation.toString());
             //此处的BDLocation为定位结果信息类，通过它的各种get方法可获取定位相关的全部结果
             //以下只列举部分获取经纬度相关（常用）的结果信息
             //更多结果信息获取说明，请参照类参考中BDLocation类中的说明
 
-            double latitude = location.getLatitude();    //获取纬度信息
-            double longitude = location.getLongitude();    //获取经度信息
-            float radius = location.getRadius();    //获取定位精度，默认值为0.0f
+            double latitude = baiduLocation.getLatitude();    //获取纬度信息
+            double longitude = baiduLocation.getLongitude();    //获取经度信息
+            float radius = baiduLocation.getRadius();    //获取定位精度，默认值为0.0f
 
-            String coorType = location.getCoorType();
+            String coorType = baiduLocation.getCoorType();
             //获取经纬度坐标类型，以LocationClientOption中设置过的坐标类型为准
 
-            int errorCode = location.getLocType();
+            int errorCode = baiduLocation.getLocType();
             //获取定位类型、定位错误返回码，具体信息可参照类参考中BDLocation类中的说明
-            MapLocation commonLocation = new MapLocation();
-            commonLocation.setProvince(location.getProvince());
-            commonLocation.setCity(location.getCity());
-            commonLocation.setDistrict(location.getDistrict());
-            commonLocation.setLatitude(latitude);
-            commonLocation.setLongitude(longitude);
-            mMapLocationListener.onLocationChanged(commonLocation);
+            MapLocation location = convert(baiduLocation);
+            mMapLocationListener.onLocationChanged(location);
         }
     }
 
@@ -103,10 +102,36 @@ public class BaiduAdapter extends BaseMapAdapter {
         option.setEnableSimulateGps(false);
         //可选，设置是否需要过滤GPS仿真结果，默认需要，即参数为false
 
+        option.setIsNeedAddress(true);
+        //可选，设置是否需要地址信息
+
+        option.setIsNeedLocationDescribe(true);
+        //可选，设置是否需要语义化
+
         mLocationClient.setLocOption(option);
         //mLocationClient为第二步初始化过的LocationClient对象
         //需将配置好的LocationClientOption对象，通过setLocOption方法传递给LocationClient对象使用
         //更多LocationClientOption的配置，请参照类参考中LocationClientOption类的详细说明
         return option;
+    }
+
+    private MapLocation convert(BDLocation baiduLocation) {
+        MapLocation location = new MapLocation();
+        location.setCountry(baiduLocation.getCountry());
+        location.setCountryCode(baiduLocation.getCountryCode());
+        location.setProvince(baiduLocation.getProvince());
+        location.setCity(baiduLocation.getCity());
+        location.setCityCode(baiduLocation.getCityCode());
+        location.setDistrict(baiduLocation.getDistrict());
+        location.setLatitude(baiduLocation.getLatitude());
+        location.setLongitude(baiduLocation.getLongitude());
+        location.setAdCode(baiduLocation.getAdCode());
+        location.setRadius(baiduLocation.getRadius());
+        location.setHasSpeed(baiduLocation.hasSpeed());
+        location.setSpeed(baiduLocation.getSpeed());
+        location.setLocationDescribe(baiduLocation.getLocationDescribe());
+        location.setOperators(baiduLocation.getOperators());
+        location.setTime(baiduLocation.getTime());
+        return location;
     }
 }

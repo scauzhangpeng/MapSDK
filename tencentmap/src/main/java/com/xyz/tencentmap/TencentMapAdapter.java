@@ -23,12 +23,7 @@ public class TencentMapAdapter extends BaseMapAdapter {
         @Override
         public void onLocationChanged(TencentLocation tencentLocation, int error, String s) {
             if (TencentLocation.ERROR_OK == error) {
-                MapLocation location  = new MapLocation();
-                location.setProvince(tencentLocation.getProvince());
-                location.setCity(tencentLocation.getCity());
-                location.setDistrict(tencentLocation.getDistrict());
-                location.setLatitude(tencentLocation.getLatitude());
-                location.setLongitude(tencentLocation.getLongitude());
+                MapLocation location = convert(tencentLocation, error, s);
                 mMapLocationListener.onLocationChanged(location);
             } else {
                 Log.d(TAG, "onLocationChanged: error" + error);
@@ -60,5 +55,19 @@ public class TencentMapAdapter extends BaseMapAdapter {
     @Override
     public void stopLocation() {
         mTencentLocationManager.removeUpdates(mListener);
+    }
+
+    private MapLocation convert(TencentLocation tencentLocation, int error, String s) {
+        MapLocation location = new MapLocation();
+        location.setCountry(tencentLocation.getNation());
+        location.setProvince(tencentLocation.getProvince());
+        location.setCity(tencentLocation.getCity());
+        location.setCityCode(tencentLocation.getCityCode());
+        location.setDistrict(tencentLocation.getDistrict());
+        location.setLatitude(tencentLocation.getLatitude());
+        location.setLongitude(tencentLocation.getLongitude());
+        location.setSpeed(tencentLocation.getSpeed());
+        location.setRadius(tencentLocation.getAccuracy());
+        return location;
     }
 }

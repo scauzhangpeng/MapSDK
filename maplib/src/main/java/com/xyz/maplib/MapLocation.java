@@ -11,12 +11,20 @@ public class MapLocation implements Parcelable, Cloneable {
 
     private double latitude;
     private double longitude;
+    private String country;
+    private String countryCode;
     private String province;
     private String city;
+    private String cityCode;
+    private String adCode;
     private String district;
+    private String locationDescribe;
+    private int operators;
+    private float radius;
+    private float speed;
+    private String time;
 
-    public MapLocation() {
-    }
+    private boolean hasSpeed;
 
     public double getLatitude() {
         return latitude;
@@ -32,6 +40,22 @@ public class MapLocation implements Parcelable, Cloneable {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
     }
 
     public String getProvince() {
@@ -50,6 +74,22 @@ public class MapLocation implements Parcelable, Cloneable {
         this.city = city;
     }
 
+    public String getCityCode() {
+        return cityCode;
+    }
+
+    public void setCityCode(String cityCode) {
+        this.cityCode = cityCode;
+    }
+
+    public String getAdCode() {
+        return adCode;
+    }
+
+    public void setAdCode(String adCode) {
+        this.adCode = adCode;
+    }
+
     public String getDistrict() {
         return district;
     }
@@ -58,18 +98,53 @@ public class MapLocation implements Parcelable, Cloneable {
         this.district = district;
     }
 
-
-    @Override
-    public String toString() {
-        return "MapLocation{" +
-                "latitude=" + latitude +
-                ", longitude=" + longitude +
-                ", province='" + province + '\'' +
-                ", city='" + city + '\'' +
-                ", district='" + district + '\'' +
-                '}';
+    public String getLocationDescribe() {
+        return locationDescribe;
     }
 
+    public void setLocationDescribe(String locationDescribe) {
+        this.locationDescribe = locationDescribe;
+    }
+
+    public int getOperators() {
+        return operators;
+    }
+
+    public void setOperators(int operators) {
+        this.operators = operators;
+    }
+
+    public float getRadius() {
+        return radius;
+    }
+
+    public void setRadius(float radius) {
+        this.radius = radius;
+    }
+
+    public float getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(float speed) {
+        this.speed = speed;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public boolean isHasSpeed() {
+        return hasSpeed;
+    }
+
+    public void setHasSpeed(boolean hasSpeed) {
+        this.hasSpeed = hasSpeed;
+    }
 
     @Override
     public int describeContents() {
@@ -80,17 +155,40 @@ public class MapLocation implements Parcelable, Cloneable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeDouble(this.latitude);
         dest.writeDouble(this.longitude);
+        dest.writeString(this.country);
+        dest.writeString(this.countryCode);
         dest.writeString(this.province);
         dest.writeString(this.city);
+        dest.writeString(this.cityCode);
+        dest.writeString(this.adCode);
         dest.writeString(this.district);
+        dest.writeString(this.locationDescribe);
+        dest.writeInt(this.operators);
+        dest.writeFloat(this.radius);
+        dest.writeFloat(this.speed);
+        dest.writeString(this.time);
+        dest.writeByte(this.hasSpeed ? (byte) 1 : (byte) 0);
+    }
+
+    public MapLocation() {
     }
 
     protected MapLocation(Parcel in) {
         this.latitude = in.readDouble();
         this.longitude = in.readDouble();
+        this.country = in.readString();
+        this.countryCode = in.readString();
         this.province = in.readString();
         this.city = in.readString();
+        this.cityCode = in.readString();
+        this.adCode = in.readString();
         this.district = in.readString();
+        this.locationDescribe = in.readString();
+        this.operators = in.readInt();
+        this.radius = in.readFloat();
+        this.speed = in.readFloat();
+        this.time = in.readString();
+        this.hasSpeed = in.readByte() != 0;
     }
 
     public static final Creator<MapLocation> CREATOR = new Creator<MapLocation>() {
@@ -104,4 +202,25 @@ public class MapLocation implements Parcelable, Cloneable {
             return new MapLocation[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "MapLocation{" +
+                "latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", country='" + country + '\'' +
+                ", countryCode='" + countryCode + '\'' +
+                ", province='" + province + '\'' +
+                ", city='" + city + '\'' +
+                ", cityCode='" + cityCode + '\'' +
+                ", adCode='" + adCode + '\'' +
+                ", district='" + district + '\'' +
+                ", locationDescribe='" + locationDescribe + '\'' +
+                ", operators=" + operators +
+                ", radius=" + radius +
+                ", speed=" + speed +
+                ", time='" + time + '\'' +
+                ", hasSpeed=" + hasSpeed +
+                '}';
+    }
 }

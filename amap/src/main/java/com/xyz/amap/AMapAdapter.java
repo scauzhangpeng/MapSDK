@@ -22,12 +22,8 @@ public class AMapAdapter extends BaseMapAdapter {
     private AMapLocationListener mAMapLocationListener = new AMapLocationListener() {
         @Override
         public void onLocationChanged(AMapLocation aMapLocation) {
-            MapLocation location = new MapLocation();
-            location.setProvince(aMapLocation.getProvince());
-            location.setCity(aMapLocation.getCity());
-            location.setDistrict(aMapLocation.getDistrict());
-            location.setLatitude(aMapLocation.getLatitude());
-            location.setLongitude(aMapLocation.getLongitude());
+            Log.d(TAG, "onLocationChanged: " + aMapLocation.toString());
+            MapLocation location = convert(aMapLocation);
             mMapLocationListener.onLocationChanged(location);
         }
     };
@@ -48,5 +44,23 @@ public class AMapAdapter extends BaseMapAdapter {
     public void stopLocation() {
         Log.d(TAG, "stopLocation: ");
         mAMapLocationClient.stopLocation();
+    }
+
+    private MapLocation convert(AMapLocation aMapLocation) {
+        MapLocation location = new MapLocation();
+        location.setCountry(aMapLocation.getCountry());
+//        location.setCountryCode(baiduLocation.getCountryCode());
+        location.setProvince(aMapLocation.getProvince());
+        location.setCity(aMapLocation.getCity());
+        location.setCityCode(aMapLocation.getCityCode());
+        location.setDistrict(aMapLocation.getDistrict());
+        location.setLatitude(aMapLocation.getLatitude());
+        location.setLongitude(aMapLocation.getLongitude());
+        location.setAdCode(aMapLocation.getAdCode());
+        location.setRadius(aMapLocation.getAccuracy());
+        location.setHasSpeed(aMapLocation.hasSpeed());
+        location.setSpeed(aMapLocation.getSpeed());
+        location.setLocationDescribe(aMapLocation.getDescription());
+        return location;
     }
 }
