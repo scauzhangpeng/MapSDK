@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
-import com.xyz.amap.AMapAdapter;
+import com.xyz.baidumap.BaiduAdapter;
 import com.xyz.maplib.MapLocation;
 import com.xyz.maplib.MapLocationClient;
 import com.xyz.maplib.MapLocationListener;
@@ -32,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private void initLocationClient() {
         mMapLocationClient = new MapLocationClient(getApplicationContext());
         mMapLocationClient.setMapLocationListener(mMapLocationListener);
-        mMapLocationClient.setMapAdapter(new AMapAdapter(getApplicationContext()));
-//        mMapLocationClient.setMapAdapter(new BaiduAdapter(getApplicationContext()));
+//        mMapLocationClient.setMapAdapter(new AMapAdapter(getApplicationContext()));
+        mMapLocationClient.setMapAdapter(new BaiduAdapter(getApplicationContext()));
 //        mMapLocationClient.setMapAdapter(new TencentMapAdapter(getApplicationContext()));
     }
 
