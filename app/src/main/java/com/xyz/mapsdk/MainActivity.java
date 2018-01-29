@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     private MapView mMapView=null;//高德地图
 //    private MapView mMapView=null;//百度地图
 //      private MapView mMapView=null;//腾讯地图
-    public static final int MAP_BAIDU=1,MAP_TENGXUN=2,MAP_GAODE=3;
     private TextView mTvLocationInfo;
     private MapLocationClient mMapLocationClient;
     private MapLocationListener mMapLocationListener = new MapLocationListener() {
@@ -50,9 +49,6 @@ public class MainActivity extends AppCompatActivity {
 
     private ShowMapAdapter mAmapAdapter;
     private Bundle bundle;
-    private  int mMapType=0;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
