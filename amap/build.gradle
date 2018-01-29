@@ -12,7 +12,10 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        ndk {
+            //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86","arm64-v8a","x86_64"
+        }
     }
     buildTypes {
         release {
@@ -29,6 +32,8 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.3.1'
     testCompile 'junit:junit:4.12'
-    compile 'com.amap.api:location:3.7.0'
+    compile 'com.amap.api:location:3.7.0'//定位
+    compile 'com.amap.api:map2d:latest.integration'//地图
+    compile 'com.amap.api:3dmap:latest.integration'
     compile project(':maplib')
 }
