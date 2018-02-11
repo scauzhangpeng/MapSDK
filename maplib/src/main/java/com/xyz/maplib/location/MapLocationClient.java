@@ -1,4 +1,4 @@
-package com.xyz.maplib;
+package com.xyz.maplib.location;
 
 import android.content.Context;
 import android.util.Log;
@@ -14,7 +14,7 @@ public class MapLocationClient {
 
     protected Context mContext;
 
-    protected Adapter mAdapter;
+    protected ILocation mILocation;
 
     public MapLocationClient(Context context) {
         mContext = context;
@@ -22,20 +22,20 @@ public class MapLocationClient {
 
     public void startLocation() {
         Log.d(TAG, "startLocation: ");
-        mAdapter.startLocation();
-        mAdapter.setMapLocationListener(mMapLocationListener);
+        mILocation.startLocation();
+        mILocation.setMapLocationListener(mMapLocationListener);
     }
 
     public void stopLocation() {
         Log.d(TAG, "stopLocation: ");
-        mAdapter.stopLocation();
+        mILocation.stopLocation();
     }
 
     public void setMapLocationListener(MapLocationListener locationListener) {
         mMapLocationListener = locationListener;
     }
 
-    public void setMapAdapter(BaseMapAdapter adapter) {
-        mAdapter = adapter;
+    public void setMapAdapter(BaseMapILocation adapter) {
+        mILocation = adapter;
     }
 }

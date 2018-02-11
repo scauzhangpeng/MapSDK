@@ -1,1 +1,5 @@
-include ':app', ':maplib', ':amap', ':baidumap', ':tencentmap'
+include ':app'
+include ':maplib'
+include ':amap'
+include ':baidumap'
+include ':tencentmap'
