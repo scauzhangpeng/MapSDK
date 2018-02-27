@@ -7,17 +7,17 @@ import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.xyz.maplib.BaseMapAdapter;
-import com.xyz.maplib.MapLocation;
+import com.xyz.maplib.location.BaseMapILocation;
+import com.xyz.maplib.location.MapLocation;
 
 
 /**
  * Created by ZP on 2018/1/15.
  */
 
-public class BaiduAdapter extends BaseMapAdapter {
+public class BaiduLocationAdapter extends BaseMapILocation {
 
-    private static final String TAG = "BaiduAdapter";
+    private static final String TAG = "BaiduLocationAdapter";
 
     private LocationClient mLocationClient;
 
@@ -43,7 +43,7 @@ public class BaiduAdapter extends BaseMapAdapter {
         }
     }
 
-    public BaiduAdapter(Context context) {
+    public BaiduLocationAdapter(Context context) {
         super(context);
         mLocationClient = new LocationClient(mContext);
         mLocationClient.setLocOption(getOption());

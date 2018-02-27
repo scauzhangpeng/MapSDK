@@ -14,34 +14,26 @@
         android:layout_margin="16dp"
         android:text=""/>
 
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="启动定位"
-        android:layout_margin="16dp"
-        android:onClick="startLocation"/>
+        android:orientation="horizontal">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="停止定位"
-        android:layout_margin="16dp"
-        android:onClick="stopLocation"/>
-      <!--高德-->
-    <com.amap.api.maps.MapView
-        android:id="@+id/map_amap"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-    <!--百度-->
-    <!--<com.baidu.mapapi.map.MapView-->
-        <!--android:id="@+id/map_baidu"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent" >-->
-    <!--</com.baidu.mapapi.map.MapView>-->
-    <!--腾讯-->
-    <!--<com.tencent.tencentmap.mapsdk.maps.MapView-->
-        <!--android:id="@+id/map_tengxun"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent" />-->
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="启动定位"
+            android:onClick="startLocation"/>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="停止定位"
+            android:onClick="stopLocation"/>
+    </LinearLayout>
+
+    <com.xyz.maplib.map.LTMapView
+        android:id="@+id/map"
+        android:layout_width="300dp"
+        android:layout_height="200dp"/>
 </LinearLayout>

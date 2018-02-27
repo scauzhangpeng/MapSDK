@@ -1,4 +1,4 @@
-package com.xyz.maplib;
+package com.xyz.maplib.location;
 
 import android.content.Context;
 
@@ -6,11 +6,11 @@ import android.content.Context;
  * Created by ZP on 2018/1/15.
  */
 
-public abstract class BaseMapAdapter implements Adapter {
+public abstract class BaseMapILocation implements ILocation {
 
     protected Context mContext;
 
-    public BaseMapAdapter(Context context) {
+    public BaseMapILocation(Context context) {
         mContext = context;
     }
 

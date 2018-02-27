@@ -7,15 +7,15 @@ import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;
 import com.tencent.map.geolocation.TencentLocationManager;
 import com.tencent.map.geolocation.TencentLocationRequest;
-import com.xyz.maplib.BaseMapAdapter;
-import com.xyz.maplib.MapLocation;
+import com.xyz.maplib.location.BaseMapILocation;
+import com.xyz.maplib.location.MapLocation;
 
 /**
  * Created by ZP on 2018/1/16.
  */
 
-public class TencentMapAdapter extends BaseMapAdapter {
-    private static final String TAG = "TencentMapAdapter";
+public class TencentLocationAdapter extends BaseMapILocation {
+    private static final String TAG = "TencentLocationAdapter";
 
     private TencentLocationManager mTencentLocationManager;
     private TencentLocationRequest mRequest;
@@ -37,7 +37,7 @@ public class TencentMapAdapter extends BaseMapAdapter {
     };
 
 
-    public TencentMapAdapter(Context context) {
+    public TencentLocationAdapter(Context context) {
         super(context);
         mRequest = TencentLocationRequest.create();
         mRequest.setInterval(2000);
@@ -49,7 +49,7 @@ public class TencentMapAdapter extends BaseMapAdapter {
     @Override
     public void startLocation() {
         int error = mTencentLocationManager.requestLocationUpdates(mRequest, mListener);
-        Log.d(TAG, "TencentMapAdapter: error:" + error);
+        Log.d(TAG, "TencentLocationAdapter: error:" + error);
     }
 
     @Override

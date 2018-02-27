@@ -2,91 +2,86 @@ package com.xyz.mapsdk;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.TextureView;
 import android.view.View;
 import android.widget.TextView;
 
-//import com.xyz.baidumap.BaiduAdapter;
-//import com.amap.api.maps.MapView;
-//import com.xyz.amap.AMapAdapter;
-//import com.xyz.amap.InitAmapAdapter;
-//import com.baidu.mapapi.SDKInitializer;
-//import com.baidu.mapapi.map.MapView;
-//import com.xyz.amap.AMapAdapter;
-//import com.xyz.baidumap.BaiduAdapter;
-//import com.xyz.baidumap.BaiduAdapter;
-//import com.xyz.baidumap.InitBaiduAdapter;
-//import com.tencent.tencentmap.mapsdk.maps.MapView;
-//import com.tencent.tencentmap.mapsdk.maps.TencentMap;
-//import com.baidu.mapapi.SDKInitializer;
-//import com.baidu.mapapi.map.MapView;
-//import com.xyz.baidumap.BaiduAdapter;
-//import com.xyz.baidumap.InitBaiduAdapter;
-import com.amap.api.maps.MapView;
-//import com.tencent.tencentmap.mapsdk.maps.MapView;
-import com.xyz.amap.AMapAdapter;
-import com.xyz.amap.InitAmapAdapter;
-import com.xyz.maplib.MapLocation;
-import com.xyz.maplib.MapLocationClient;
-import com.xyz.maplib.MapLocationListener;
-import com.xyz.maplib.ShowMapAdapter;
-//import com.xyz.tencentmap.InitTengXunAdapter;
-//import com.xyz.tencentmap.TencentMapAdapter;
+import com.xyz.maplib.location.MapLocation;
+import com.xyz.maplib.location.MapLocationClient;
+import com.xyz.maplib.location.MapLocationListener;
+import com.xyz.maplib.map.LTMapView;
+import com.xyz.maplib.map.LTMarker;
+import com.xyz.maplib.map.LTMarkerOptions;
+import com.xyz.tencentmap.TencentLocationAdapter;
+import com.xyz.tencentmap.TencentMapViewAdapter;
 
 public class MainActivity extends AppCompatActivity {
-    private MapView mMapView=null;//高德地图
-//    private MapView mMapView=null;//百度地图
-//      private MapView mMapView=null;//腾讯地图
+
     private TextView mTvLocationInfo;
     private MapLocationClient mMapLocationClient;
     private MapLocationListener mMapLocationListener = new MapLocationListener() {
         @Override
         public void onLocationChanged(MapLocation location) {
             mTvLocationInfo.setText(location.toString() + "时间戳:" + System.currentTimeMillis());
+            mLTMapView.moveCamera(location.getLatitude(), location.getLongitude());
+            if (mMarker == null) {
+                addMarker(location);
+            } else {
+                mMarker.remove();
+                addMarker(location);
+            }
         }
     };
 
-    private ShowMapAdapter mAmapAdapter;
-    private Bundle bundle;
+    private void addMarker(MapLocation location) {
+        LTMarkerOptions options = new LTMarkerOptions.Builder()
+                .draggable(true)
+                .icon(R.drawable.ic_main_poi_event)
+                .longitude(location.getLongitude())
+                .latitude(location.getLatitude())
+                .build();
+        mMarker = mLTMapView.addMarker(options);
+    }
+
+    private LTMapView mLTMapView;
+    private LTMarker mMarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 //        SDKInitializer.initialize(getApplicationContext());//百度地图的初始化化配置 这个是必须的放在setContentView  最好是放在自定义的Application里面 以后就可以全局的调用
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initView();
+        initView(savedInstanceState);
         initLocationClient();
-//        高德地图需要Bundule savedInstanceState  绑定是在initView里面
-        mAmapAdapter=new InitAmapAdapter(mMapView,savedInstanceState);
-        // 百度地图  绑定在initView里面
-//        mAmapAdapter=  new InitBaiduAdapter(mMapView);
-        //腾讯地图
-//        mAmapAdapter=new InitTengXunAdapter(mMapView);
-        if(mAmapAdapter!=null) {
-            mAmapAdapter.setMarkDefault(116.397972, 39.906901, R.mipmap.ic_launcher);//地图定位到北京
-        }
+
+//        if(mAmapAdapter!=null) {
+//            mAmapAdapter.setMarkDefault(116.397972, 39.906901, R.drawable.ic_main_poi_event);//地图定位到北京
+//        }
+        LTMarkerOptions options = new LTMarkerOptions.Builder()
+                .draggable(true)
+                .icon(R.drawable.ic_main_poi_event)
+                .longitude(116.397972)
+                .latitude(39.906901)
+                .build();
+        mMarker = mLTMapView.addMarker(options);
     }
 
     private void initLocationClient() {
         mMapLocationClient = new MapLocationClient(getApplicationContext());
         mMapLocationClient.setMapLocationListener(mMapLocationListener);
-        mMapLocationClient.setMapAdapter(new AMapAdapter(getApplicationContext()));
-//        mMapLocationClient.setMapAdapter(new BaiduAdapter(getApplicationContext()));
-//        mMapLocationClient.setMapAdapter(new TencentMapAdapter(getApplicationContext()));
+//        mMapLocationClient.setMapAdapter(new AMapLocationAdapter(getApplicationContext()));
+//        mMapLocationClient.setMapAdapter(new BaiduLocationAdapter(getApplicationContext()));
+        mMapLocationClient.setMapAdapter(new TencentLocationAdapter(getApplicationContext()));
     }
-    private void initView() {
-        mTvLocationInfo = (TextView) findViewById(R.id.tv_location_info);
-        if(mMapView==null){//高德地图
-            mMapView= (MapView) findViewById(R.id.map_amap);
-        }
-//        if(mMapView==null) {//百度地图
-//            mMapView = (MapView) findViewById(R.id.map_baidu);
-//        }
-//          if(mMapView==null){//腾讯地图
-//              mMapView= (MapView) findViewById(R.id.map_tengxun);
-//          }
 
+    private void initView(Bundle savedInstanceState) {
+        mTvLocationInfo = (TextView) findViewById(R.id.tv_location_info);
+        //map
+        mLTMapView = (LTMapView) findViewById(R.id.map);
+        //比正常操作地图多一个设置，必须前于onCreate方法
+//        mLTMapView.setMap(new AMapViewAdapter());
+//        mLTMapView.setMap(new BaiduMapViewAdapter());
+        mLTMapView.setMap(new TencentMapViewAdapter());
+        mLTMapView.onCreate(getApplicationContext(), savedInstanceState);
     }
 
     public void startLocation(View view) {
@@ -97,59 +92,45 @@ public class MainActivity extends AppCompatActivity {
         mMapLocationClient.stopLocation();
     }
 
-
     @Override
     protected void onStart() {
-        // TODO Auto-generated method stub
         super.onStart();
-        if(mAmapAdapter!=null){
-            mAmapAdapter.onStart();
-        }
+        mLTMapView.onStart();
     }
 
     @Override
     protected void onResume() {
-        // TODO Auto-generated method stub
         super.onResume();
-        if(mAmapAdapter!=null){
-            mAmapAdapter.onResume();
-        }
+        mLTMapView.onResume();
     }
 
     @Override
     protected void onPause() {
-        // TODO Auto-generated method stub
         super.onPause();
-        if(mAmapAdapter!=null){
-            mAmapAdapter.onPause();
-        }
+        mLTMapView.onPause();
     }
 
     @Override
     protected void onStop() {
-        // TODO Auto-generated method stub
         super.onStop();
-        if(mAmapAdapter!=null){
-            mAmapAdapter.onStop();
-        }
+        mLTMapView.onStop();
     }
 
     @Override
     protected void onRestart() {
-        // TODO Auto-generated method stub
-
         super.onRestart();
-        if(mAmapAdapter!=null){
-            mAmapAdapter.onRestart();
-        }
+        mLTMapView.onRestart();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mLTMapView.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onDestroy() {
-        // TODO Auto-generated method stub
         super.onDestroy();
-        if(mAmapAdapter!=null){
-            mAmapAdapter.onDestroy();
-        }
+        mLTMapView.onDestroy();
     }
 }
