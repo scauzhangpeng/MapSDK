@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:text=""/>
+        android:text="" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,18 +21,101 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="启动定位"
-            android:onClick="startLocation"/>
+            android:onClick="startLocation"
+            android:text="启动定位" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="停止定位"
-            android:onClick="stopLocation"/>
+            android:onClick="stopLocation"
+            android:text="停止定位" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="setZoomControl"
+            android:text="缩放开启/关闭" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="addMore"
+            android:text="添加多个mark" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="showOrHide"
+            android:text="显示/隐藏" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="cleanMark"
+            android:text="清除" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="refreshMark"
+            android:text="刷新" />
     </LinearLayout>
 
     <com.xyz.maplib.map.LTMapView
         android:id="@+id/map"
         android:layout_width="300dp"
-        android:layout_height="200dp"/>
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:paddingTop="5dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="statLevelChangeListener"
+            android:text="开启缩放等级监听" />
+
+        <TextView
+            android:id="@+id/tv_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:onClick="stopLocation"
+            android:text=""
+            android:textSize="16sp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="定位北京 缩放为13"
+            android:onClick="setCenterAndLevel"/>
+
+         <Button
+             android:layout_width="wrap_content"
+             android:text=" 缩放为10"
+             android:onClick="setLevel"
+             android:layout_height="wrap_content" />
+        <Button
+            android:layout_width="wrap_content"
+            android:text="路况开/关"
+            android:onClick="setTrafficEnable"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 </LinearLayout>
