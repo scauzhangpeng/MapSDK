@@ -36,7 +36,7 @@ public class TencentMapViewAdapter implements IMapView {
     private MapView mMapView;
     private TencentMap mTencentMapClient;
     private MarkListener markListener;
-    private final List<MarkerOptions>markerOptionsList=new ArrayList<>();
+    private final List<MarkerOptions> markerOptionsList = new ArrayList<>();
 
     @Override
     public void onCreate(Context context, Bundle savedInstanceState) {
@@ -75,7 +75,7 @@ public class TencentMapViewAdapter implements IMapView {
     @Override
     public void onDestroy() {
         mMapView.onDestroy();
-        if(markerOptionsList!=null&&markerOptionsList.size()>0){
+        if (markerOptionsList != null && markerOptionsList.size() > 0) {
             markerOptionsList.clear();
         }
     }
@@ -117,7 +117,7 @@ public class TencentMapViewAdapter implements IMapView {
 
     @Override
     public void cleanMarker() {
-        if(mTencentMapClient!=null) {
+        if (mTencentMapClient != null) {
             mTencentMapClient.clear();
         }
     }
@@ -125,17 +125,17 @@ public class TencentMapViewAdapter implements IMapView {
     @Override
     public void refreshMarker() {
         cleanMarker();
-        if(markerOptionsList!=null&&markerOptionsList.size()>0){
+        if (markerOptionsList != null && markerOptionsList.size() > 0) {
             markerOptionsList.clear();
         }
     }
 
     @Override
     public void setMarkers(List<LTMarkerOptions> optionses) {
-        if(markerOptionsList!=null&&markerOptionsList.size()>0){
+        if (markerOptionsList != null && markerOptionsList.size() > 0) {
             markerOptionsList.clear();
         }
-        for (LTMarkerOptions options:optionses){
+        for (LTMarkerOptions options : optionses) {
             MarkerOptions markerOption = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(options.getIcon()))
                     .position(new LatLng(options.getLatitude(), options.getLongitude()))
                     .draggable(true);
@@ -146,20 +146,20 @@ public class TencentMapViewAdapter implements IMapView {
 
     @Override
     public void showHasMarkers(boolean isShow) {
-        if(isShow){
-            if(mTencentMapClient!=null){
+        if (isShow) {
+            if (mTencentMapClient != null) {
                 mTencentMapClient.clear();
             }
 //            Log.e("tag","markOptionsList.Size:Show"+markerOptionsList.size());
-            if(markerOptionsList!=null&&markerOptionsList.size()>0){
-                for (MarkerOptions markerOptions:markerOptionsList){
+            if (markerOptionsList != null && markerOptionsList.size() > 0) {
+                for (MarkerOptions markerOptions : markerOptionsList) {
                     Marker marker = mTencentMapClient.addMarker(markerOptions);
                 }
-            }else {
-                Log.e("tag","没有覆盖物数据！");
+            } else {
+                Log.e("tag", "没有覆盖物数据！");
             }
-        }else {
-            if(mTencentMapClient!=null){//不是现实覆盖物就清空覆盖物
+        } else {
+            if (mTencentMapClient != null) {//不是现实覆盖物就清空覆盖物
                 mTencentMapClient.clear();
             }
         }
@@ -167,14 +167,14 @@ public class TencentMapViewAdapter implements IMapView {
 
     @Override
     public void setMarkerClickTitle(MarkListener markListener) {
-        this.markListener=markListener;
+        this.markListener = markListener;
         mTencentMapClient.setOnMarkerClickListener(markerClickListener);
     }
 
     @Override
     public void setZoomControlsEnabled(boolean b) {
-        if (mTencentMapClient!=null){
-            UiSettings settings= mTencentMapClient.getUiSettings();
+        if (mTencentMapClient != null) {
+            UiSettings settings = mTencentMapClient.getUiSettings();
             settings.setZoomControlsEnabled(b);
         }
 
@@ -185,14 +185,14 @@ public class TencentMapViewAdapter implements IMapView {
         mTencentMapClient.setOnCameraChangeListener(new TencentMap.OnCameraChangeListener() {
             @Override
             public void onCameraChange(CameraPosition cameraPosition) {
-                float zoomLevel=   cameraPosition.zoom;
+                float zoomLevel = cameraPosition.zoom;
                 zoomLevelChangeListener.getZoomLevel(zoomLevel);
 
             }
 
             @Override
             public void onCameraChangeFinished(CameraPosition cameraPosition) {
-                float zoomLevel=   cameraPosition.zoom;
+                float zoomLevel = cameraPosition.zoom;
                 zoomLevelChangeListener.getZoomLevel(zoomLevel);
             }
         });
@@ -202,7 +202,7 @@ public class TencentMapViewAdapter implements IMapView {
     public void setZoomLevel(float zoom, double lat, double lon) {
         LatLng lng = new LatLng(lat, lon);
         //设置中心点和缩放比例
-        if(mTencentMapClient!=null) {
+        if (mTencentMapClient != null) {
             CameraUpdate cameraSigma =
                     CameraUpdateFactory.newCameraPosition(new CameraPosition(
                             lng, //新的中心点坐标
@@ -216,36 +216,37 @@ public class TencentMapViewAdapter implements IMapView {
 
     @Override
     public void setZoomLevel(float zoom) {
-        if (mTencentMapClient!=null) {
+        if (mTencentMapClient != null) {
             mTencentMapClient.moveCamera(CameraUpdateFactory.zoomTo(zoom));
         }
     }
 
 
-    private TencentMap.OnMarkerClickListener markerClickListener=new TencentMap.OnMarkerClickListener() {
+    private TencentMap.OnMarkerClickListener markerClickListener = new TencentMap.OnMarkerClickListener() {
         @Override
         public boolean onMarkerClick(Marker marker) {
-            MarkerOptions markerOptions=marker.getOptions();
-            LatLng latLng=markerOptions.getPosition();
-            List<LTMarkerOptions>LitMarkerOptions=new ArrayList<>();
-            if(latLng!=null){//找出相同坐标
-                for (MarkerOptions options: markerOptionsList){
-                     LatLng lng=  options.getPosition();
-                     boolean isDrag=options.isDraggable();
-                    if(latLng.equals(options.getPosition())){
-                        LTMarkerOptions markerOption=  new LTMarkerOptions.Builder().latitude(lng.latitude).longitude(lng.longitude).draggable(isDrag).build();
+            MarkerOptions markerOptions = marker.getOptions();
+            LatLng latLng = markerOptions.getPosition();
+            List<LTMarkerOptions> LitMarkerOptions = new ArrayList<>();
+            if (latLng != null) {//找出相同坐标
+                for (MarkerOptions options : markerOptionsList) {
+                    LatLng lng = options.getPosition();
+                    boolean isDrag = options.isDraggable();
+                    if (latLng.equals(options.getPosition())) {
+                        LTMarkerOptions markerOption = new LTMarkerOptions.Builder().latitude(lng.latitude).longitude(lng.longitude).draggable(isDrag).build();
                         LitMarkerOptions.add(markerOption);
                     }
                 }
             }
-            if(LitMarkerOptions!=null&&LitMarkerOptions.size()>0){//点击的监听
+            if (LitMarkerOptions != null && LitMarkerOptions.size() > 0) {//点击的监听
                 markListener.clickMarkTitle(LitMarkerOptions);
             }
             return false;
         }
     };
-    public void setMapTraffic(boolean isShow){
-        if (mTencentMapClient!=null) {
+
+    public void setMapTraffic(boolean isShow) {
+        if (mTencentMapClient != null) {
             mTencentMapClient.setTrafficEnabled(isShow);
         }
     }
