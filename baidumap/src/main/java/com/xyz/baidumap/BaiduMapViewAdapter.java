@@ -79,7 +79,7 @@ public class BaiduMapViewAdapter implements IMapView {
     @Override
     public void onDestroy() {
         mMapView.onDestroy();
-        if(markerOptionsList!=null&&markerOptionsList.size()>0){
+        if (markerOptionsList != null && markerOptionsList.size() > 0) {
             markerOptionsList.clear();
         }
     }
@@ -183,7 +183,7 @@ public class BaiduMapViewAdapter implements IMapView {
 
     @Override
     public void setZoomControlsEnabled(boolean b) {
-        if(mMapView!=null){
+        if (mMapView != null) {
             mMapView.showZoomControls(b);
         }
 
@@ -194,7 +194,7 @@ public class BaiduMapViewAdapter implements IMapView {
         mBMapClient.setOnMapStatusChangeListener(new BaiduMap.OnMapStatusChangeListener() {
             @Override
             public void onMapStatusChangeStart(MapStatus mapStatus) {
-                float z=  mapStatus.zoom;
+                float z = mapStatus.zoom;
                 zoomLevelChangeListener.getZoomLevel(z);
             }
 
@@ -210,7 +210,7 @@ public class BaiduMapViewAdapter implements IMapView {
 
             @Override
             public void onMapStatusChangeFinish(MapStatus mapStatus) {
-                float z=  mapStatus.zoom;
+                float z = mapStatus.zoom;
                 zoomLevelChangeListener.getZoomLevel(z);
             }
         });
@@ -245,8 +245,8 @@ public class BaiduMapViewAdapter implements IMapView {
     };
 
 
-    public void setZoomLevel(float zoom, double lat,double lon){
-        LatLng center = new LatLng(lon,lat);
+    public void setZoomLevel(float zoom, double lat, double lon) {
+        LatLng center = new LatLng(lon, lat);
         //定义地图状态
         MapStatus mMapStatus = new MapStatus.Builder()
                 .target(center)
@@ -259,7 +259,7 @@ public class BaiduMapViewAdapter implements IMapView {
     }
 
 
-    public void setZoomLevel(float zoom){
+    public void setZoomLevel(float zoom) {
         //定义地图状态
         MapStatus mMapStatus = new MapStatus.Builder()
                 .zoom(zoom)
@@ -272,7 +272,7 @@ public class BaiduMapViewAdapter implements IMapView {
 
     @Override
     public void setMapTraffic(boolean isShow) {
-        if(mBMapClient!=null){
+        if (mBMapClient != null) {
             mBMapClient.setTrafficEnabled(isShow);
         }
     }

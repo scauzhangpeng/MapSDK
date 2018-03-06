@@ -18,6 +18,7 @@ import java.util.List;
 public class LTMapView extends FrameLayout {
     private Context mContext;
     private IMapView mIMapViewDelegate;
+
     public LTMapView(Context context) {
         this(context, null);
     }
@@ -86,102 +87,109 @@ public class LTMapView extends FrameLayout {
 
     /**
      * 给覆盖物点击获取到覆盖物的标题
+     *
      * @param markListener
      */
-    public void setMarkListener(MarkListener markListener){
-        if (mIMapViewDelegate!=null){
+    public void setMarkListener(MarkListener markListener) {
+        if (mIMapViewDelegate != null) {
             mIMapViewDelegate.setMarkerClickTitle(markListener);
-        }else {
-            Log.e("tag","mImapViewDelegage 为空");
+        } else {
+            Log.e("tag", "mImapViewDelegage 为空");
         }
     }
 
     /**
      * 设置覆盖物数据
+     *
      * @param options
      */
-    public void setMarkOptions(List<LTMarkerOptions> options){
-        if (mIMapViewDelegate!=null){
+    public void setMarkOptions(List<LTMarkerOptions> options) {
+        if (mIMapViewDelegate != null) {
             mIMapViewDelegate.setMarkers(options);
-        }else {
-            Log.e("tag","mImapViewDelegage 为空");
+        } else {
+            Log.e("tag", "mImapViewDelegage 为空");
         }
     }
 
     /**
      * 清除覆盖物
      */
-    public void cleanMarker(){
-        if (mIMapViewDelegate!=null){
+    public void cleanMarker() {
+        if (mIMapViewDelegate != null) {
             mIMapViewDelegate.cleanMarker();
-        }else {
-            Log.e("tag","mImapViewDelegage 为空");
+        } else {
+            Log.e("tag", "mImapViewDelegage 为空");
         }
     }
-    public void refreshMarker(){
-        if (mIMapViewDelegate!=null){
+
+    public void refreshMarker() {
+        if (mIMapViewDelegate != null) {
             mIMapViewDelegate.refreshMarker();
-        }else {
-            Log.e("tag","mImapViewDelegage 为空");
+        } else {
+            Log.e("tag", "mImapViewDelegage 为空");
         }
     }
 
     /**
      * 是否显示覆盖物
+     *
      * @param isShow
      */
-    public void isShowMarkers(boolean isShow){
-        if (mIMapViewDelegate!=null){
+    public void isShowMarkers(boolean isShow) {
+        if (mIMapViewDelegate != null) {
             mIMapViewDelegate.showHasMarkers(isShow);
-        }else {
-            Log.e("tag","mImapViewDelegage 为空");
+        } else {
+            Log.e("tag", "mImapViewDelegage 为空");
         }
     }
 
     /**
      * 开启放大缩小图标
+     *
      * @param isShow
      */
-    public void setZoomControlsEnabled(boolean isShow){
-        if (mIMapViewDelegate!=null){
+    public void setZoomControlsEnabled(boolean isShow) {
+        if (mIMapViewDelegate != null) {
             mIMapViewDelegate.setZoomControlsEnabled(isShow);
-        }else {
-            Log.e("tag","mImapViewDelegage 为空");
+        } else {
+            Log.e("tag", "mImapViewDelegage 为空");
         }
     }
 
-    public void setZoomLevelChangListener(ZoomLevelChangeListener zoomLevelChangListener){
-        if (mIMapViewDelegate!=null){
+    public void setZoomLevelChangListener(ZoomLevelChangeListener zoomLevelChangListener) {
+        if (mIMapViewDelegate != null) {
             mIMapViewDelegate.getCurrentZoomLevel(zoomLevelChangListener);
-        }else {
-            Log.e("tag","mImapViewDelegage 为空");
+        } else {
+            Log.e("tag", "mImapViewDelegage 为空");
         }
     }
 
-    public void setCenterAndLevel(float zoom,double lai,double lon){
-        if (mIMapViewDelegate!=null){
-            mIMapViewDelegate.setZoomLevel(zoom,lai,lon);
-        }else {
-            Log.e("tag","mImapViewDelegage 为空");
+    public void setCenterAndLevel(float zoom, double lai, double lon) {
+        if (mIMapViewDelegate != null) {
+            mIMapViewDelegate.setZoomLevel(zoom, lai, lon);
+        } else {
+            Log.e("tag", "mImapViewDelegage 为空");
         }
     }
-    public void setLevel(float zoom){
-        if (mIMapViewDelegate!=null){
+
+    public void setLevel(float zoom) {
+        if (mIMapViewDelegate != null) {
             mIMapViewDelegate.setZoomLevel(zoom);
-        }else {
-            Log.e("tag","mImapViewDelegage 为空");
+        } else {
+            Log.e("tag", "mImapViewDelegage 为空");
         }
     }
 
     /**
      * 是否显示路况
+     *
      * @param isShow
      */
-    public void setTrafficEnabled(boolean isShow){
-        if (mIMapViewDelegate!=null){
+    public void setTrafficEnabled(boolean isShow) {
+        if (mIMapViewDelegate != null) {
             mIMapViewDelegate.setMapTraffic(isShow);
-        }else {
-            Log.e("tag","mImapViewDelegage 为空");
+        } else {
+            Log.e("tag", "mImapViewDelegage 为空");
         }
     }
 
