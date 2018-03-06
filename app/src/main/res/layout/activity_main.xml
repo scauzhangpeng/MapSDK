@@ -95,6 +95,7 @@
             android:textSize="16sp" />
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -103,19 +104,20 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="定位北京 缩放为13"
-            android:onClick="setCenterAndLevel"/>
+            android:onClick="setCenterAndLevel"
+            android:text="定位北京 缩放为13" />
 
-         <Button
-             android:layout_width="wrap_content"
-             android:text=" 缩放为10"
-             android:onClick="setLevel"
-             android:layout_height="wrap_content" />
         <Button
             android:layout_width="wrap_content"
-            android:text="路况开/关"
+            android:layout_height="wrap_content"
+            android:onClick="setLevel"
+            android:text=" 缩放为10" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:onClick="setTrafficEnable"
-            android:layout_height="wrap_content" />
+            android:text="路况开/关" />
 
     </LinearLayout>
 </LinearLayout>

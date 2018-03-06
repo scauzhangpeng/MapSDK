@@ -164,10 +164,10 @@ public class AMapViewAdapter implements IMapView {
 
     @Override
     public void setZoomControlsEnabled(boolean b) {
-          if (mAMapClient!=null){
-              UiSettings settings= mAMapClient.getUiSettings();
-              settings.setZoomControlsEnabled(b);
-          }
+        if (mAMapClient != null) {
+            UiSettings settings = mAMapClient.getUiSettings();
+            settings.setZoomControlsEnabled(b);
+        }
 
     }
 
@@ -176,13 +176,13 @@ public class AMapViewAdapter implements IMapView {
         mAMapClient.setOnCameraChangeListener(new AMap.OnCameraChangeListener() {
             @Override
             public void onCameraChange(CameraPosition cameraPosition) {
-                float z=  cameraPosition.zoom;
+                float z = cameraPosition.zoom;
                 zoomLevelChangeListener.getZoomLevel(z);
             }
 
             @Override
             public void onCameraChangeFinish(CameraPosition cameraPosition) {
-                float z=  cameraPosition.zoom;
+                float z = cameraPosition.zoom;
                 zoomLevelChangeListener.getZoomLevel(z);
             }
         });
@@ -192,7 +192,7 @@ public class AMapViewAdapter implements IMapView {
     public void setZoomLevel(float zoom, double lat, double lon) {
         LatLng marker1 = new LatLng(lat, lon);
         //设置中心点和缩放比例
-        if(mAMapClient!=null) {
+        if (mAMapClient != null) {
             mAMapClient.moveCamera(CameraUpdateFactory.changeLatLng(marker1));
             mAMapClient.moveCamera(CameraUpdateFactory.zoomTo(zoom));
         }
@@ -200,14 +200,14 @@ public class AMapViewAdapter implements IMapView {
 
     @Override
     public void setZoomLevel(float zoom) {
-        if(mAMapClient!=null){
+        if (mAMapClient != null) {
             mAMapClient.moveCamera(CameraUpdateFactory.zoomTo(zoom));
         }
     }
 
     @Override
     public void setMapTraffic(boolean isShow) {
-        if(mAMapClient!=null){
+        if (mAMapClient != null) {
             mAMapClient.setTrafficEnabled(isShow);
         }
     }
