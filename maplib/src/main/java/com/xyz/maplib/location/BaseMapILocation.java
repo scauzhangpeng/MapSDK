@@ -20,4 +20,9 @@ public abstract class BaseMapILocation implements ILocation {
     public void setMapLocationListener(MapLocationListener locationListener) {
         mMapLocationListener = locationListener;
     }
+
+    @Override
+    public void unRegisterMapLocationListener(MapLocationListener locationListener) {
+        mMapLocationListener = null;
+    }
 }

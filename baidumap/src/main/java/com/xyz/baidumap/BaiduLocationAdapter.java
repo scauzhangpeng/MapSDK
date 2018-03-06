@@ -9,6 +9,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.xyz.maplib.location.BaseMapILocation;
 import com.xyz.maplib.location.MapLocation;
+import com.xyz.maplib.location.MapLocationListener;
 
 
 /**
@@ -21,10 +22,15 @@ public class BaiduLocationAdapter extends BaseMapILocation {
 
     private LocationClient mLocationClient;
 
+    private MyLocationListener mMyLocationListener;
+
     public class MyLocationListener extends BDAbstractLocationListener {
         @Override
         public void onReceiveLocation(BDLocation baiduLocation) {
-            Log.d(TAG, "onReceiveLocation: " + baiduLocation.toString());
+            Log.d(TAG, "百度地图定位结果: " + baiduLocation.toString());
+            if (mMapLocationListener == null) {
+                return;
+            }
             //此处的BDLocation为定位结果信息类，通过它的各种get方法可获取定位相关的全部结果
             //以下只列举部分获取经纬度相关（常用）的结果信息
             //更多结果信息获取说明，请参照类参考中BDLocation类中的说明
@@ -47,7 +53,19 @@ public class BaiduLocationAdapter extends BaseMapILocation {
         super(context);
         mLocationClient = new LocationClient(mContext);
         mLocationClient.setLocOption(getOption());
-        mLocationClient.registerLocationListener(new MyLocationListener());
+        mMyLocationListener = new MyLocationListener();
+    }
+
+    @Override
+    public void setMapLocationListener(MapLocationListener locationListener) {
+        super.setMapLocationListener(locationListener);
+        mLocationClient.registerLocationListener(mMyLocationListener);
+    }
+
+    @Override
+    public void unRegisterMapLocationListener(MapLocationListener locationListener) {
+        super.unRegisterMapLocationListener(locationListener);
+        mLocationClient.unRegisterLocationListener(mMyLocationListener);
     }
 
     @Override
@@ -58,6 +76,14 @@ public class BaiduLocationAdapter extends BaseMapILocation {
     @Override
     public void stopLocation() {
         mLocationClient.stop();
+    }
+
+    @Override
+    public String getVersion() {
+        if (mLocationClient != null) {
+            return mContext.getString(R.string.bmap_location_version) + mLocationClient.getVersion();
+        }
+        return null;
     }
 
     private LocationClientOption getOption() {
@@ -132,6 +158,12 @@ public class BaiduLocationAdapter extends BaseMapILocation {
         location.setLocationDescribe(baiduLocation.getLocationDescribe());
         location.setOperators(baiduLocation.getOperators());
         location.setTime(baiduLocation.getTime());
+        location.setAddress(baiduLocation.getAddress().address);
+//        location.setAoiName(baiduLocation.getAoiName());
+//        location.setPoiName(baiduLocation.getPoiName());
+//        location.setRoad(baiduLocation.getRoad());
+        location.setStreet(baiduLocation.getAddress().street);
+        location.setStreetNum(baiduLocation.getAddress().streetNumber);
         return location;
     }
 }

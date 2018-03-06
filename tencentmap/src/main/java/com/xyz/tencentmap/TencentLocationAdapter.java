@@ -23,8 +23,11 @@ public class TencentLocationAdapter extends BaseMapILocation {
         @Override
         public void onLocationChanged(TencentLocation tencentLocation, int error, String s) {
             if (TencentLocation.ERROR_OK == error) {
-                MapLocation location = convert(tencentLocation, error, s);
-                mMapLocationListener.onLocationChanged(location);
+                Log.d(TAG, "腾讯定位结果: " + tencentLocation.toString());
+                if (mMapLocationListener != null) {
+                    MapLocation location = convert(tencentLocation, error, s);
+                    mMapLocationListener.onLocationChanged(location);
+                }
             } else {
                 Log.d(TAG, "onLocationChanged: error" + error);
             }
@@ -57,6 +60,15 @@ public class TencentLocationAdapter extends BaseMapILocation {
         mTencentLocationManager.removeUpdates(mListener);
     }
 
+    @Override
+    public String getVersion() {
+        if (mTencentLocationManager != null) {
+            return mContext.getString(R.string.tmap_location_version) + mTencentLocationManager.getVersion();
+        } else {
+            return null;
+        }
+    }
+
     private MapLocation convert(TencentLocation tencentLocation, int error, String s) {
         MapLocation location = new MapLocation();
         location.setCountry(tencentLocation.getNation());
@@ -68,6 +80,12 @@ public class TencentLocationAdapter extends BaseMapILocation {
         location.setLongitude(tencentLocation.getLongitude());
         location.setSpeed(tencentLocation.getSpeed());
         location.setRadius(tencentLocation.getAccuracy());
+        location.setAddress(tencentLocation.getAddress());
+//        location.setAoiName(tencentLocation.getAoiName());
+//        location.setPoiName(tencentLocation.getPoiName());
+//        location.setRoad(tencentLocation.getRoad());
+        location.setStreet(tencentLocation.getStreet());
+        location.setStreetNum(tencentLocation.getStreetNo());
         return location;
     }
 }

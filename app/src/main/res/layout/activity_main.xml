@@ -35,6 +35,12 @@
             android:layout_height="wrap_content"
             android:onClick="setZoomControl"
             android:text="缩放开启/关闭" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="getVersion"
+            android:text="sdk版本"/>
     </LinearLayout>
 
     <LinearLayout

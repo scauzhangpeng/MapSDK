@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">MapLib</string>
+    <string name="amap_location_version">高德地图定位SDK版本号:</string>
+    <string name="bmap_location_version">百度地图定位SDK版本号:</string>
+    <string name="tmap_location_version">腾讯地图定位SDK版本号:</string>
 </resources>

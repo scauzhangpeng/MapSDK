@@ -2,12 +2,14 @@ package com.xyz.mapsdk;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.xyz.amap.AMapLocationAdapter;
-import com.xyz.amap.AMapViewAdapter;
+import com.baidu.mapapi.SDKInitializer;
+import com.xyz.baidumap.BaiduLocationAdapter;
+import com.xyz.baidumap.BaiduMapViewAdapter;
 import com.xyz.maplib.location.MapLocation;
 import com.xyz.maplib.location.MapLocationClient;
 import com.xyz.maplib.location.MapLocationListener;
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "MainActivity";
     private TextView tvLevel;
     private TextView mTvLocationInfo;
     private MapLocationClient mMapLocationClient;
@@ -28,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private MapLocationListener mMapLocationListener = new MapLocationListener() {
         @Override
         public void onLocationChanged(MapLocation location) {
+            Log.d(TAG, "LT定位: " + location.toString());
             mLocation = location;
             mTvLocationInfo.setText(location.toString() + "时间戳:" + System.currentTimeMillis());
             mLTMapView.moveCamera(location.getLatitude(), location.getLongitude());
@@ -55,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        SDKInitializer.initialize(getApplicationContext());//百度地图的初始化化配置 这个是必须的放在setContentView  最好是放在自定义的Application里面 以后就可以全局的调用
+        SDKInitializer.initialize(getApplicationContext());//百度地图的初始化化配置 这个是必须的放在setContentView  最好是放在自定义的Application里面 以后就可以全局的调用
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView(savedInstanceState);
@@ -74,11 +78,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initLocationClient() {
-        mMapLocationClient = new MapLocationClient(getApplicationContext());
+//        mMapLocationClient = new MapLocationClient(new AMapLocationAdapter(getApplicationContext()));
+        mMapLocationClient = new MapLocationClient(new BaiduLocationAdapter(getApplicationContext()));
+//        mMapLocationClient = new MapLocationClient(new TencentLocationAdapter(getApplicationContext()));
         mMapLocationClient.setMapLocationListener(mMapLocationListener);
-        mMapLocationClient.setMapAdapter(new AMapLocationAdapter(getApplicationContext()));
-//        mMapLocationClient.setMapAdapter(new BaiduLocationAdapter(getApplicationContext()));
-//        mMapLocationClient.setMapAdapter(new TencentLocationAdapter(getApplicationContext()));
     }
 
     private void initView(Bundle savedInstanceState) {
@@ -87,8 +90,8 @@ public class MainActivity extends AppCompatActivity {
         //map
         mLTMapView = (LTMapView) findViewById(R.id.map);
         //比正常操作地图多一个设置，必须前于onCreate方法
-        mLTMapView.setMap(new AMapViewAdapter());
-//        mLTMapView.setMap(new BaiduMapViewAdapter());
+//        mLTMapView.setMap(new AMapViewAdapter());
+        mLTMapView.setMap(new BaiduMapViewAdapter());
 //        mLTMapView.setMap(new TencentMapViewAdapter());
         mLTMapView.onCreate(getApplicationContext(), savedInstanceState);
     }
@@ -269,6 +272,16 @@ public class MainActivity extends AppCompatActivity {
             view.setTag(1);
             mLTMapView.setTrafficEnabled(false);
         }
+    }
+
+    /**
+     * 获取SDK版本号.
+     *
+     * @param view {@link android.widget.Button}
+     */
+    public void getVersion(View view) {
+        String version = mMapLocationClient.getVersion();
+        Toast.makeText(this, version, Toast.LENGTH_LONG).show();
     }
 
 

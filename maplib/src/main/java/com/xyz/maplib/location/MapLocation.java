@@ -17,12 +17,18 @@ public class MapLocation implements Parcelable, Cloneable {
     private String city;
     private String cityCode;
     private String adCode;
+    private String address;
     private String district;
     private String locationDescribe;
     private int operators;
     private float radius;
     private float speed;
     private String time;
+    private String road;
+    private String poiName;
+    private String street;
+    private String streetNum;
+    private String aoiName;
 
     private boolean hasSpeed;
 
@@ -90,6 +96,14 @@ public class MapLocation implements Parcelable, Cloneable {
         this.adCode = adCode;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public String getDistrict() {
         return district;
     }
@@ -138,6 +152,46 @@ public class MapLocation implements Parcelable, Cloneable {
         this.time = time;
     }
 
+    public String getRoad() {
+        return road;
+    }
+
+    public void setRoad(String road) {
+        this.road = road;
+    }
+
+    public String getPoiName() {
+        return poiName;
+    }
+
+    public void setPoiName(String poiName) {
+        this.poiName = poiName;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getStreetNum() {
+        return streetNum;
+    }
+
+    public void setStreetNum(String streetNum) {
+        this.streetNum = streetNum;
+    }
+
+    public String getAoiName() {
+        return aoiName;
+    }
+
+    public void setAoiName(String aoiName) {
+        this.aoiName = aoiName;
+    }
+
     public boolean isHasSpeed() {
         return hasSpeed;
     }
@@ -161,12 +215,18 @@ public class MapLocation implements Parcelable, Cloneable {
         dest.writeString(this.city);
         dest.writeString(this.cityCode);
         dest.writeString(this.adCode);
+        dest.writeString(this.address);
         dest.writeString(this.district);
         dest.writeString(this.locationDescribe);
         dest.writeInt(this.operators);
         dest.writeFloat(this.radius);
         dest.writeFloat(this.speed);
         dest.writeString(this.time);
+        dest.writeString(this.road);
+        dest.writeString(this.poiName);
+        dest.writeString(this.street);
+        dest.writeString(this.streetNum);
+        dest.writeString(this.aoiName);
         dest.writeByte(this.hasSpeed ? (byte) 1 : (byte) 0);
     }
 
@@ -182,12 +242,18 @@ public class MapLocation implements Parcelable, Cloneable {
         this.city = in.readString();
         this.cityCode = in.readString();
         this.adCode = in.readString();
+        this.address = in.readString();
         this.district = in.readString();
         this.locationDescribe = in.readString();
         this.operators = in.readInt();
         this.radius = in.readFloat();
         this.speed = in.readFloat();
         this.time = in.readString();
+        this.road = in.readString();
+        this.poiName = in.readString();
+        this.street = in.readString();
+        this.streetNum = in.readString();
+        this.aoiName = in.readString();
         this.hasSpeed = in.readByte() != 0;
     }
 
@@ -214,12 +280,18 @@ public class MapLocation implements Parcelable, Cloneable {
                 ", city='" + city + '\'' +
                 ", cityCode='" + cityCode + '\'' +
                 ", adCode='" + adCode + '\'' +
+                ", address='" + address + '\'' +
                 ", district='" + district + '\'' +
                 ", locationDescribe='" + locationDescribe + '\'' +
                 ", operators=" + operators +
                 ", radius=" + radius +
                 ", speed=" + speed +
                 ", time='" + time + '\'' +
+                ", road='" + road + '\'' +
+                ", poiName='" + poiName + '\'' +
+                ", street='" + street + '\'' +
+                ", streetNum='" + streetNum + '\'' +
+                ", aoiName='" + aoiName + '\'' +
                 ", hasSpeed=" + hasSpeed +
                 '}';
     }

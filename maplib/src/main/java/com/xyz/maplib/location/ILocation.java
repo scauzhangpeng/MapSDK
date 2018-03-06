@@ -10,5 +10,9 @@ public interface ILocation {
 
     void setMapLocationListener(MapLocationListener locationListener);
 
+    void unRegisterMapLocationListener(MapLocationListener locationListener);
+
     void stopLocation();
+
+    String getVersion();
 }
